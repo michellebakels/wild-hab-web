@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import WildHabEventForm from "./WildHabEventForm";
+import WildHabEventForm from "./CreateEventForm/WildHabEventForm";
 
 ReactDOM.render(
   <React.StrictMode>
