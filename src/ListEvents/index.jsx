@@ -14,7 +14,7 @@ const ListEvents = () => {
         <>
             <div>Hello List Events</div>
             {eventsList && eventsList.map(event =>
-                <p>{event.eventName || event.name}, {event.sport}, Duration: {event.eventDuration}</p>
+                <p key={event.id}>{event.eventName || event.name}, {event.sport}, Duration: {event.eventDuration}</p>
             )}
         </>
     )
