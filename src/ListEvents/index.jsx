@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import {Col, List, Row} from "antd";
 
-const addToFavorites = (eventId) => {
-    console.log('button clicked', eventId)
+const addToFavorites = (eventId, setFavoriteEvents) => {
+    setFavoriteEvents((favorites) => favorites.concat(eventId))
 }
 
 const ListEvents = () => {
     const [eventsList, setEventsList] = useState([])
+    const [favoriteEvents, setFavoriteEvents] = useState([])
+
     useEffect(() => {
         fetch("https://wildhab-api-a.web.app/events")
             .then(result => result.json())
             .then(data => setEventsList(data.data))
             .catch(error => console.log('error', error))
     }, [])
+
+    console.log({favoriteEvents})
 
     return(
         <>
@@ -28,7 +32,7 @@ const ListEvents = () => {
                         renderItem={event =>
                             <List.Item
                                 key={event.id}
-                                actions={[<a key="add-to-favorites" onClick={addToFavorites.bind(undefined, event.id)}>add to favorites</a>]}
+                                actions={[<a key="add-to-favorites" onClick={() => addToFavorites(event.id, setFavoriteEvents)}>add to favorites</a>]}
                             >
                                 {event.eventName || event.name}, {event.sport}, Duration: {event.eventDuration}
                             </List.Item>
