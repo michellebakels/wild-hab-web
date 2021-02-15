@@ -3,8 +3,14 @@ import {Col, List, Row} from "antd";
 
 const addToFavorites = (event, favoriteEvents, setFavoriteEvents) => {
     const favoriteEventExists = favoriteEvents.some(favoriteEvent => event.id === favoriteEvent.id)
-
     return favoriteEventExists ? undefined : setFavoriteEvents((favorites) => favorites.concat(event))
+}
+
+const removeFromFavorites = (favEvent, favoriteEvents, setFavoriteEvents) => {
+    const eventIndex = favoriteEvents.findIndex(event => event.id === favEvent.id)
+    const updatedFavoriteEvents = [...favoriteEvents]
+    updatedFavoriteEvents.splice(eventIndex, 1)
+    setFavoriteEvents(updatedFavoriteEvents)
 }
 
 const ListEvents = () => {
@@ -42,6 +48,7 @@ const ListEvents = () => {
                         renderItem={favEvent =>
                             <List.Item
                                 key={favEvent.id}
+                                actions={[<a key="remove-from-favorites" onClick={() => removeFromFavorites(favEvent, favoriteEvents, setFavoriteEvents)}>remove</a>]}
                             >
                                 {favEvent.eventName || favEvent.name}, {favEvent.sport}, Duration: {favEvent.eventDuration}
                             </List.Item>
