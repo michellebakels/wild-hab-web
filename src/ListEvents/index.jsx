@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {Col, List, Row} from "antd";
+import { HeartOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const addToFavorites = (event, favoriteEvents, setFavoriteEvents) => {
     const favoriteEventExists = favoriteEvents.some(favoriteEvent => event.id === favoriteEvent.id)
@@ -34,7 +35,7 @@ const ListEvents = () => {
                         renderItem={event =>
                             <List.Item
                                 key={event.id}
-                                actions={[<a key="add-to-favorites" onClick={() => addToFavorites(event, favoriteEvents, setFavoriteEvents)}>add to favorites</a>]}
+                                actions={[<a key="add-to-favorites" onClick={() => addToFavorites(event, favoriteEvents, setFavoriteEvents)}><HeartOutlined /></a>]}
                             >
                                 {event.eventName || event.name}, {event.sport}, Duration: {event.eventDuration}
                             </List.Item>
@@ -48,7 +49,7 @@ const ListEvents = () => {
                         renderItem={favEvent =>
                             <List.Item
                                 key={favEvent.id}
-                                actions={[<a key="remove-from-favorites" onClick={() => removeFromFavorites(favEvent, favoriteEvents, setFavoriteEvents)}>remove</a>]}
+                                actions={[<a key="remove-from-favorites" onClick={() => removeFromFavorites(favEvent, favoriteEvents, setFavoriteEvents)}><DeleteOutlined /></a>]}
                             >
                                 {favEvent.eventName || favEvent.name}, {favEvent.sport}, Duration: {favEvent.eventDuration}
                             </List.Item>
