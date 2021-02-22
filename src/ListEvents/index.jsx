@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Col, List, Row} from "antd";
+import {Col, Input, List, Row} from "antd";
 import { HeartOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const addToFavorites = (event, favoriteEvents, setFavoriteEvents) => {
@@ -16,6 +16,7 @@ const removeFromFavorites = (favEvent, favoriteEvents, setFavoriteEvents) => {
 
 const ListEvents = () => {
     const [eventsList, setEventsList] = useState([])
+    const [durationFilterValue, setDurationFilterValue] = useState(undefined)
     const [favoriteEvents, setFavoriteEvents] = useState([])
 
     useEffect(() => {
@@ -25,12 +26,32 @@ const ListEvents = () => {
             .catch(error => console.log('error', error))
     }, [])
 
+    useEffect(() => {
+        if (durationFilterValue !== undefined) {
+            const filteredEvents = eventsList.filter(event => parseInt(event.eventDuration) <= durationFilterValue)
+            setEventsList(filteredEvents)
+        }
+    }, [durationFilterValue])
+
+    const header = () => {
+        return(
+            <div>
+                <h2>All WildHab Events</h2>
+                <label>Filter by Duration:</label>
+                <Input
+                    value={durationFilterValue}
+                    onChange={(e) => {setDurationFilterValue(e.target.value)}}
+                />
+            </div>
+        )
+    }
+
     return(
         <>
             <Row justify="space-around">
                 <Col>
                     <List
-                        header={<div>All WildHab Events</div>}
+                        header={header()}
                         dataSource={eventsList}
                         renderItem={event =>
                             <List.Item
